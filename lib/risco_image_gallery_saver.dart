@@ -8,16 +8,30 @@ class RiscoImageGallerySaver {
   /// imageBytes can't null
   /// return Map type
   /// for example:{"isSuccess":true, "filePath":String?}
-  FutureOr<dynamic> saveImage(Uint8List imageBytes,
-      {int quality = 80,
-        String? name,
-        bool isReturnImagePathOfIOS = false}) async {
-    return RiscoImageGallerySaverPlatform.instance.saveImage(imageBytes, quality: quality, name: name, isReturnImagePathOfIOS: isReturnImagePathOfIOS);
+  FutureOr<dynamic> saveImage(
+    Uint8List imageBytes, {
+    int quality = 80,
+    String? name,
+    bool isReturnImagePathOfIOS = false,
+  }) async {
+    return RiscoImageGallerySaverPlatform.instance.saveImage(
+      imageBytes,
+      quality: quality,
+      name: name,
+      isReturnImagePathOfIOS: isReturnImagePathOfIOS,
+    );
   }
 
   /// Save the PNG，JPG，JPEG image or video located at [file] to the local device media gallery.
-  Future saveFile(String file,
-      {String? name, bool isReturnPathOfIOS = false}) async {
-    return RiscoImageGallerySaverPlatform.instance.saveFile(file, name: name, isReturnPathOfIOS: isReturnPathOfIOS);
+  Future saveFile(
+    String file, {
+    String? name,
+    bool isReturnPathOfIOS = false,
+  }) async {
+    return RiscoImageGallerySaverPlatform.instance.saveFile(
+      file,
+      name: name,
+      isReturnPathOfIOS: isReturnPathOfIOS,
+    );
   }
 }

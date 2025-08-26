@@ -11,7 +11,8 @@ abstract class RiscoImageGallerySaverPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static RiscoImageGallerySaverPlatform _instance = MethodChannelRiscoImageGallerySaver();
+  static RiscoImageGallerySaverPlatform _instance =
+      MethodChannelRiscoImageGallerySaver();
 
   /// The default instance of [RiscoImageGallerySaverPlatform] to use.
   ///
@@ -30,16 +31,21 @@ abstract class RiscoImageGallerySaverPlatform extends PlatformInterface {
   /// imageBytes can't null
   /// return Map type
   /// for example:{"isSuccess":true, "filePath":String?}
-  FutureOr<dynamic> saveImage(Uint8List imageBytes,
-      {int quality = 80,
-        String? name,
-        bool isReturnImagePathOfIOS = false}) async {
+  FutureOr<dynamic> saveImage(
+    Uint8List imageBytes, {
+    int quality = 80,
+    String? name,
+    bool isReturnImagePathOfIOS = false,
+  }) async {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
   /// Save the PNG，JPG，JPEG image or video located at [file] to the local device media gallery.
-  Future saveFile(String file,
-      {String? name, bool isReturnPathOfIOS = false}) async {
+  Future saveFile(
+    String file, {
+    String? name,
+    bool isReturnPathOfIOS = false,
+  }) async {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 }

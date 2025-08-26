@@ -117,8 +117,8 @@ class HDialogWidget<T> extends StatelessWidget {
                   style: TextStyle(color: _getActionColor(option.type))));
     }).toList();
     final dialog = AlertDialog(
-      title: title==null ? null : Text(title),
-      content: contentWidget != null && content==null
+      title: title == null ? null : Text(title),
+      content: contentWidget != null && content == null
           ? contentWidget
           : Text(content ?? ''),
       actions: actions,
@@ -144,7 +144,7 @@ class HDialogWidget<T> extends StatelessWidget {
       );
     }).toList();
     return CupertinoAlertDialog(
-      title: title==null ? null : Text(title),
+      title: title == null ? null : Text(title),
       content: contentWidget != null && content == null
           ? contentWidget
           : Text(content ?? ''),
@@ -184,8 +184,8 @@ class HDialogWidget<T> extends StatelessWidget {
                         color: _getActionColor(bottomSheetCancel.type))),
           );
     return CupertinoActionSheet(
-        title: title==null ? null : Text(title),
-        message: contentWidget != null && content==null
+        title: title == null ? null : Text(title),
+        message: contentWidget != null && content == null
             ? contentWidget
             : Text(content ?? ''),
         actions: actions,

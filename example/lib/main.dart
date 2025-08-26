@@ -105,8 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
     ByteData? byteData =
         await (image.toByteData(format: ui.ImageByteFormat.png));
     if (byteData != null) {
-      final result =
-          await RiscoImageGallerySaver().saveImage(byteData.buffer.asUint8List());
+      final result = await RiscoImageGallerySaver()
+          .saveImage(byteData.buffer.asUint8List());
       print(result);
       Utils.toast(result.toString());
     }
@@ -130,8 +130,8 @@ class _MyHomePageState extends State<MyHomePage> {
     String fileUrl =
         "https://hyjdoc.oss-cn-beijing.aliyuncs.com/hyj-doc-flutter-demo-run.gif";
     await Dio().download(fileUrl, savePath);
-    final result =
-        await RiscoImageGallerySaver().saveFile(savePath, isReturnPathOfIOS: true);
+    final result = await RiscoImageGallerySaver()
+        .saveFile(savePath, isReturnPathOfIOS: true);
     print(result);
     Utils.toast("$result");
   }

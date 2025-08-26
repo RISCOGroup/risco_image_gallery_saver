@@ -12,7 +12,8 @@ class HFontSizes {
 extension FontWeightExt on FontWeight {
   static const FontWeight light = FontWeight.w300;
   static const FontWeight regular = FontWeight.w400;
-  static FontWeight medium = Platform.isAndroid ? FontWeight.w600 : FontWeight.w600;
+  static FontWeight medium =
+      Platform.isAndroid ? FontWeight.w600 : FontWeight.w600;
   static const FontWeight semibold = FontWeight.w800;
   static const FontWeight bold = FontWeight.w900;
 }
