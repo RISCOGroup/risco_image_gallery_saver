@@ -1,4 +1,4 @@
-name: image_gallery_saver_example
+name: risco_image_gallery_saver_example
 description: Demonstrates how to use the image_gallery_saver plugin.
 
 # The following defines the version and build number for your application.
@@ -16,7 +16,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  permission_handler: ^10.3.0
+  permission_handler: ^12.0.1
   fluttertoast: ^8.2.2
   path_provider: ^2.0.15
   dio: ^5.2.1+1

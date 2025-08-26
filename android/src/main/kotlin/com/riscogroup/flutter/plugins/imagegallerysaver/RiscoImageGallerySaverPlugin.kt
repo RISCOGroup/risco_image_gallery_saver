@@ -23,18 +23,19 @@ import android.webkit.MimeTypeMap
 import java.io.OutputStream
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import io.flutter.plugin.common.MethodChannel.Result
 
-class ImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var methodChannel: MethodChannel
     private var applicationContext: Context? = null
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         this.applicationContext = binding.applicationContext
-        methodChannel = MethodChannel(binding.binaryMessenger, "image_gallery_saver")
+        methodChannel = MethodChannel(binding.binaryMessenger, "risco_image_gallery_saver")
         methodChannel.setMethodCallHandler(this)
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall,@NonNull result: Result): Unit {
+    override fun onMethodCall(@NonNull call: MethodCall,@NonNull result: Result) {
         when (call.method) {
             "saveImageToGallery" -> {
                 val image = call.argument<ByteArray?>("imageBytes")
