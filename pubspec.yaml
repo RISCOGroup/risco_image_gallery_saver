@@ -23,7 +23,7 @@ flutter:
         package: com.riscogroup.flutter.plugins.imagegallerysaver
         pluginClass: RiscoImageGallerySaverPlugin
       ios:
-        pluginClass: ImageGallerySaverPlugin
+        pluginClass: RiscoImageGallerySaverPlugin
 
 dev_dependencies:
   flutter_test:
