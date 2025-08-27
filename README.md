@@ -2,6 +2,9 @@
 
 We use the `image_picker` plugin to select images from the Android and iOS image library, but it can't save images to the gallery. This plugin can provide this feature.
 
+[![pub package](https://img.shields.io/pub/v/risco_image_gallery_saver.svg)](https://pub.dartlang.org/packages/risco_image_gallery_saver)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+
 ## Usage
 
 To use this plugin, add `risco_image_gallery_saver` as a dependency in your pubspec.yaml file. For example:
