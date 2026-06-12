@@ -12,12 +12,14 @@ class RiscoImageGallerySaver {
     Uint8List imageBytes, {
     int quality = 80,
     String? name,
+    String? directoryPath,
     bool isReturnImagePathOfIOS = false,
   }) async {
     return RiscoImageGallerySaverPlatform.instance.saveImage(
       imageBytes,
       quality: quality,
       name: name,
+      directoryPath: directoryPath,
       isReturnImagePathOfIOS: isReturnImagePathOfIOS,
     );
   }
@@ -26,11 +28,13 @@ class RiscoImageGallerySaver {
   Future saveFile(
     String file, {
     String? name,
+    String? directoryPath,
     bool isReturnPathOfIOS = false,
   }) async {
     return RiscoImageGallerySaverPlatform.instance.saveFile(
       file,
       name: name,
+      directoryPath: directoryPath,
       isReturnPathOfIOS: isReturnPathOfIOS,
     );
   }
