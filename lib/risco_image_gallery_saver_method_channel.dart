@@ -16,10 +16,12 @@ class MethodChannelRiscoImageGallerySaver
   /// imageBytes can't null
   /// return Map type
   /// for example:{"isSuccess":true, "filePath":String?}
+  @override
   FutureOr<dynamic> saveImage(
     Uint8List imageBytes, {
     int quality = 80,
     String? name,
+    String? directoryPath,
     bool isReturnImagePathOfIOS = false,
   }) async {
     final result = await methodChannel
@@ -27,25 +29,27 @@ class MethodChannelRiscoImageGallerySaver
           'imageBytes': imageBytes,
           'quality': quality,
           'name': name,
+          'directoryPath': directoryPath,
           'isReturnImagePathOfIOS': isReturnImagePathOfIOS,
         });
     return result;
   }
 
   /// Save the PNG，JPG，JPEG image or video located at [file] to the local device media gallery.
+  @override
   Future saveFile(
     String file, {
     String? name,
+    String? directoryPath,
     bool isReturnPathOfIOS = false,
   }) async {
-    final result = await methodChannel.invokeMethod(
-      'saveFileToGallery',
-      <String, dynamic>{
-        'file': file,
-        'name': name,
-        'isReturnPathOfIOS': isReturnPathOfIOS,
-      },
-    );
+    final result = await methodChannel
+        .invokeMethod('saveFileToGallery', <String, dynamic>{
+          'file': file,
+          'name': name,
+          'directoryPath': directoryPath,
+          'isReturnPathOfIOS': isReturnPathOfIOS,
+        });
     return result;
   }
 }

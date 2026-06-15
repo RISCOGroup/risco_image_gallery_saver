@@ -41,6 +41,7 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                 val image = call.argument<ByteArray?>("imageBytes")
                 val quality = call.argument<Int?>("quality")
                 val name = call.argument<String?>("name")
+                val directoryPath = call.argument<String?>("directoryPath")
 
                 result.success(
                     saveImageToGallery(
@@ -48,7 +49,7 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                             image ?: ByteArray(0),
                             0,
                             image?.size ?: 0
-                        ), quality, name
+                        ), quality, name, directoryPath
                     )
                 )
             }
@@ -56,7 +57,8 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
             "saveFileToGallery" -> {
                 val path = call.argument<String?>("file")
                 val name = call.argument<String?>("name")
-                result.success(saveFileToGallery(path, name))
+                val directoryPath = call.argument<String?>("directoryPath")
+                result.success(saveFileToGallery(path, name, directoryPath))
             }
 
             else -> result.notImplemented()
@@ -68,7 +70,7 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
         methodChannel.setMethodCallHandler(null);
     }
 
-    private fun generateUri(extension: String = "", name: String? = null): Uri? {
+    private fun generateUri(extension: String = "", name: String? = null, directoryPath: String? = null): Uri? {
         var fileName = name ?: System.currentTimeMillis().toString()
         val mimeType = getMIMEType(extension)
         val isVideo = mimeType?.startsWith("video")==true
@@ -80,14 +82,16 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                 else -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             }
 
+            val defaultRelativePath = when {
+                isVideo -> Environment.DIRECTORY_MOVIES
+                else -> Environment.DIRECTORY_PICTURES
+            }
+            
+            val relativePath = if(directoryPath != null) "$defaultRelativePath/$directoryPath" else defaultRelativePath
+
             val values = ContentValues().apply {
                 put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-                put(
-                    MediaStore.MediaColumns.RELATIVE_PATH, when {
-                        isVideo -> Environment.DIRECTORY_MOVIES
-                        else -> Environment.DIRECTORY_PICTURES
-                    }
-                )
+                put(MediaStore.MediaColumns.RELATIVE_PATH, relativePath)
                 if (!TextUtils.isEmpty(mimeType)) {
                     put(when {isVideo -> MediaStore.Video.Media.MIME_TYPE
                         else -> MediaStore.Images.Media.MIME_TYPE
@@ -103,7 +107,7 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                 Environment.getExternalStoragePublicDirectory(when {
                     isVideo -> Environment.DIRECTORY_MOVIES
                     else -> Environment.DIRECTORY_PICTURES
-                }).absolutePath
+                }).absolutePath + (if(directoryPath != null) "/$directoryPath" else "")
             val appDir = File(storePath).apply {
                 if (!exists()) {
                     mkdir()
@@ -147,7 +151,8 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
     private fun saveImageToGallery(
         bmp: Bitmap?,
         quality: Int?,
-        name: String?
+        name: String?,
+        directoryPath: String?
     ): HashMap<String, Any?> {
         // check parameters
         if (bmp == null || quality == null) {
@@ -160,7 +165,7 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
         var fos: OutputStream? = null
         var success = false
         try {
-            fileUri = generateUri("jpg", name = name)
+            fileUri = generateUri("jpg", name = name, directoryPath = directoryPath)
             if (fileUri != null) {
                 fos = context.contentResolver.openOutputStream(fileUri)
                 if (fos != null) {
@@ -184,7 +189,7 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
         }
     }
 
-    private fun saveFileToGallery(filePath: String?, name: String?): HashMap<String, Any?> {
+    private fun saveFileToGallery(filePath: String?, name: String?, directoryPath: String?): HashMap<String, Any?> {
         // check parameters
         if (filePath == null) {
             return SaveResultModel(false, null, "parameters error").toHashMap()
@@ -202,7 +207,7 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
         try {
             val originalFile = File(filePath)
             if(!originalFile.exists()) return SaveResultModel(false, null, "$filePath does not exist").toHashMap()
-            fileUri = generateUri(originalFile.extension, name)
+            fileUri = generateUri(originalFile.extension, name, directoryPath = directoryPath)
             if (fileUri != null) {
                 outputStream = context.contentResolver?.openOutputStream(fileUri)
                 if (outputStream != null) {
@@ -231,6 +236,7 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
             SaveResultModel(false, null, "saveFileToGallery fail").toHashMap()
         }
     }
+
 
     private var activity: Activity? = null
 

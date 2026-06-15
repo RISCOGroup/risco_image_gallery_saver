@@ -1,6 +1,6 @@
 name: risco_image_gallery_saver
 description: A flutter plugin for save image to gallery, iOS need to add the following keys to your Info.plist file.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/RISCOGroup/risco_image_gallery_saver
 
 environment:

@@ -35,6 +35,7 @@ abstract class RiscoImageGallerySaverPlatform extends PlatformInterface {
     Uint8List imageBytes, {
     int quality = 80,
     String? name,
+    String? directoryPath,
     bool isReturnImagePathOfIOS = false,
   }) async {
     throw UnimplementedError('platformVersion() has not been implemented.');
@@ -44,6 +45,7 @@ abstract class RiscoImageGallerySaverPlatform extends PlatformInterface {
   Future saveFile(
     String file, {
     String? name,
+    String? directoryPath,
     bool isReturnPathOfIOS = false,
   }) async {
     throw UnimplementedError('platformVersion() has not been implemented.');
