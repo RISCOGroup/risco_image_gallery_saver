@@ -10,7 +10,7 @@ We use the `image_picker` plugin to select images from the Android and iOS image
 To use this plugin, add `risco_image_gallery_saver` as a dependency in your pubspec.yaml file. For example:
 ```yaml
 dependencies:
-  risco_image_gallery_saver: '^0.1.0'
+  risco_image_gallery_saver: '^0.1.2'
 ```
 
 ## iOS
