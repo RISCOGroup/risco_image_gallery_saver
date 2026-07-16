@@ -87,7 +87,7 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                 else -> Environment.DIRECTORY_PICTURES
             }
             
-            val relativePath = if(directoryPath != null) "$defaultRelativePath/$directoryPath" else defaultRelativePath
+            val relativePath = directoryPath?.takeIf { it.isNotBlank() } ?: defaultRelativePath
 
             val values = ContentValues().apply {
                 put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
@@ -103,14 +103,17 @@ class RiscoImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler, ActivityA
 
         } else {
             // < android 10
-            val storePath =
+            val defaultStorePath =
                 Environment.getExternalStoragePublicDirectory(when {
                     isVideo -> Environment.DIRECTORY_MOVIES
                     else -> Environment.DIRECTORY_PICTURES
-                }).absolutePath + (if(directoryPath != null) "/$directoryPath" else "")
+                }).absolutePath
+            val storePath = directoryPath?.takeIf { it.isNotBlank() }
+                ?.let { "$defaultStorePath/$it" }
+                ?: defaultStorePath
             val appDir = File(storePath).apply {
                 if (!exists()) {
-                    mkdir()
+                    mkdirs()
                 }
             }
 
